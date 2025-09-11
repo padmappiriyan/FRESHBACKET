@@ -1,12 +1,13 @@
 import { Routes,Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import HomePage from './pages/HomePage'
-
+import { Toaster } from 'react-hot-toast'
 
 const App = () => {
   const isSellerPath=useLocation().pathname.includes("seller");
   return (
     <div>
+      <Toaster />
       {!isSellerPath && (
              <Navbar/>
       )}
