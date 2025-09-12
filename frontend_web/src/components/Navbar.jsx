@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { NavLink } from "react-router-dom"
 import { IoSearch } from "react-icons/io5";
 import { FiShoppingCart } from "react-icons/fi";
@@ -7,12 +7,17 @@ import profile from "../assets/profile.png";
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);
-    const {user,setUser,setshowUserLogin,navigate}= useAppContext();
+    const {user,setUser,setshowUserLogin,navigate,searchQuery,setSearchQuery}= useAppContext();
   
     const logout =async ()=>{
         setUser(null);
         navigate('/');
     }
+    useEffect(()=>{
+          if(searchQuery.length>0){
+            navigate('/products');
+          }
+    },[searchQuery])
   return (
     <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white relative transition-all">
 
@@ -23,11 +28,12 @@ const Navbar = () => {
             
             <div className="hidden sm:flex items-center gap-8">
                 <NavLink to='/'>Home</NavLink>
-                <NavLink to='/All-products'>AllProducts</NavLink>
+                <NavLink to='/products'>AllProducts</NavLink>
                 <NavLink to='/Contact'>Contact</NavLink>
 
                 <div className="hidden lg:flex items-center text-sm gap-2 border border-gray-300 px-3 rounded-full">
-                    <input className="py-1.5 w-full bg-transparent outline-none placeholder-gray-500" type="text" placeholder="Search products" />
+                    <input className="py-1.5 w-full bg-transparent outline-none placeholder-gray-500" type="text" placeholder="Search products" 
+                    onChange={(e)=>{setSearchQuery(e.target.value)}}/>
                     <IoSearch className="w-4 h-4 text-gray-500"/>
                 </div>
 
@@ -36,8 +42,9 @@ const Navbar = () => {
                     <FiShoppingCart className="w-4 h-4 "/>
                     <button className="absolute -top-2 -right-3 text-xs text-white bg-indigo-500 w-[18px] h-[18px] rounded-full">3</button>
                 </div>
-                { !user ? (
-                <button className="cursor-pointer px-8 py-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full">
+                {!user ? (
+                <button className="cursor-pointer px-8 py-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full"
+                onClick={()=>{setshowUserLogin(true)}}>
                     Login
                 </button>
                 )
