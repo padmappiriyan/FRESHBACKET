@@ -7,10 +7,11 @@ export const AppContext = createContext();
 
 export const AppContextProvider = ({ children }) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState(true);
+  const [user, setUser] = useState(false);
   const [isSeller, setIsSeller] = useState(false);
   const [showUserLogin, setshowUserLogin]= useState(false);
   const [products,setProducts]=useState([]);
+  const [searchQuery,setSearchQuery]=useState({});
  const currency= import.meta.VITE_CURRENCY;
 
  const [cartItems,setCartItems]=useState({});
@@ -57,7 +58,9 @@ export const AppContextProvider = ({ children }) => {
 
 
   return (
-    <AppContext.Provider value={{ user, setUser, navigate, isSeller, setIsSeller ,showUserLogin,setshowUserLogin ,products,currency ,addToCart ,updateCartItem , removeCartItem,cartItems,setCartItems,products,setProducts}}>
+    <AppContext.Provider value={{ user, setUser, navigate, isSeller, setIsSeller ,showUserLogin,setshowUserLogin ,products,currency ,addToCart ,updateCartItem , removeCartItem,cartItems,setCartItems,products,setProducts,
+      searchQuery,setSearchQuery
+    }}>
       {children}
     </AppContext.Provider>
   );
